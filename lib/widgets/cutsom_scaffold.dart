@@ -13,19 +13,24 @@ class BaseScaffold extends StatelessWidget {
   final bool showDivider;
   final bool enableScroll;
   final double topPadding;
+  final double dialogTopPadding;
+  final double rowStyleTopPadding;
+  final double showSubTitleSpacing;
   final bool showSubTitle;
   final Widget child;
   final Widget? suffixIcon;
   final void Function()? onMenuPressed;
   final Color? backgroundColor;
-  final void Function()? onPop;
-  const BaseScaffold(
-      {Key? key,
-      this.title = "",
+
+  BaseScaffold(
+      {this.title = "",
       this.subTitle = "",
       this.useRowAppBar = true,
       this.bckImage,
-      this.topPadding = 30,
+      this.topPadding = 60,
+      this.showSubTitleSpacing = 30,
+      this.dialogTopPadding = 20,
+      this.rowStyleTopPadding = 100,
       this.showSubTitle = true,
       this.showTitle = true,
       this.showLeading = true,
@@ -34,57 +39,61 @@ class BaseScaffold extends StatelessWidget {
       this.showDivider = false,
       required this.child,
       this.suffixIcon,
-      this.onPop,
       this.onMenuPressed,
-      this.backgroundColor})
-      : super(key: key);
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor ?? AppColors.white,
-      body: SafeArea(
-        bottom: false,
-        child: Stack(
-          children: [
-            bckImage != null
-                ? Container(
-                    height: eqH(331),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(bckImage!),
-                            fit: BoxFit.fitWidth)),
-                  )
-                : Container(),
-            Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: eqW(10), right: eqW(20), top: eqH(0)),
-                  child: useRowAppBar
-                      ? _appBar(
-                          title: title,
-                          showTitle: showTitle,
-                          onPop: () => Navigator.pop(context),
-                          showLeading: showLeading,
-                          showTrailing: showTrailing,
-                          suffixIcon: suffixIcon!,
-                          onMenuPressed: onMenuPressed!)
-                      : _cancleAppBar(
-                          onPop: onPop ?? () => Navigator.pop(context),
-                          title: title,
-                          subTitle: subTitle,
-                          showDivider: showDivider,
-                          showSubTitle: showSubTitle,
-                          showTitle: showTitle),
-                ),
-                showSubTitle ? VerticalSpace(30) : VerticalSpace(0),
-                Expanded(child: child)
-              ],
-            ),
-          ],
-        ),
+    return Material(
+      color: backgroundColor ?? AppColors.white,
+      child: Stack(
+        children: [
+          bckImage != null
+              ? Container(
+                  height: eqH(331),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage(bckImage!), fit: BoxFit.fitWidth)),
+                )
+              : Container(),
+          useRowAppBar
+              ? Container(
+                  margin: EdgeInsets.only(top: rowStyleTopPadding),
+                  color: AppColors.white,
+                )
+              : SizedBox(),
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    left: eqW(14),
+                    right: eqW(20),
+                    top: eqH(useRowAppBar ? topPadding : dialogTopPadding)),
+                child: useRowAppBar
+                    ? _appBar(
+                        title: title,
+                        showTitle: showTitle,
+                        onPop: () => Navigator.pop(context),
+                        showLeading: showLeading,
+                        showTrailing: showTrailing,
+                        suffixIcon: suffixIcon,
+                        onMenuPressed: onMenuPressed)
+                    : _cancleAppBar(
+                        onPop: () => Navigator.pop(context),
+                        title: title,
+                        subTitle: subTitle,
+                        showDivider: showDivider,
+                        showSubTitle: showSubTitle,
+                        showTitle: showTitle),
+              ),
+              showSubTitle
+                  ? VerticalSpace(showSubTitleSpacing)
+                  : VerticalSpace(0),
+              Expanded(child: child)
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -98,7 +107,8 @@ Widget _appBar(
     bool showTitle = true,
     bool showLeading = true,
     bool showTrailing = true}) {
-  return Row(
+  return Container(
+      child: Row(
     mainAxisAlignment:
         showLeading ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
     children: [
@@ -107,7 +117,7 @@ Widget _appBar(
               onPressed: onPop,
               color: AppColors.textColor,
             )
-          : HorizontalSpace(0),
+          : HorizontalSpace(20),
       showTitle
           ? CustomText(
               title,
@@ -117,16 +127,10 @@ Widget _appBar(
             )
           : HorizontalSpace(eqW(20)),
       showTrailing
-          ? suffixIcon ??
-              InkWell(
-                  onTap: onMenuPressed,
-                  child: Icon(
-                    Icons.adjust,
-                    size: 20.sp,
-                  ))
+          ? suffixIcon ?? InkWell(onTap: onMenuPressed, child: Icon(Icons.more))
           : HorizontalSpace(eqW(20)),
     ],
-  );
+  ));
 }
 
 Widget _cancleAppBar(
@@ -137,13 +141,13 @@ Widget _cancleAppBar(
     bool showSubTitle = true,
     bool showDivider = false}) {
   return Container(
-    padding: const EdgeInsets.only(left: 20),
+    padding: EdgeInsets.only(left: 10),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(
             alignment: Alignment.topRight,
-            child: GestureDetector(
+            child: InkWell(
                 onTap: onPop,
                 child: Icon(
                   Icons.close,
@@ -163,13 +167,17 @@ Widget _cancleAppBar(
                   ),
                   showSubTitle ? VerticalSpace(eqH(8)) : VerticalSpace(0),
                   showSubTitle
-                      ? SizedBox(
-                          width: screenWidth * 0.75,
-                          child: CustomText(
-                            subTitle ?? "",
-                            maxLines: 3,
-                            color: AppColors.textColor,
-                            textType: TextType.smallText,
+                      ? Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: Wrap(
+                            children: [
+                              CustomText(
+                                subTitle ?? "",
+                                maxLines: 3,
+                                color: AppColors.textColor,
+                                textType: TextType.smallText,
+                              ),
+                            ],
                           ),
                         )
                       : VerticalSpace(0),

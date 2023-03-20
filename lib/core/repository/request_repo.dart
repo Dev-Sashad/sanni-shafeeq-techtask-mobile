@@ -26,7 +26,7 @@ class RequestRepoImpl extends RequestRepo {
         return BaseResponse(
             status: false, message: result.message, title: result.status);
       } else {
-        appPrint('the result is ${result.status}');
+        appPrint('the result is ${result.data}');
         return BaseResponse(
             status: true,
             message: result.message,
@@ -54,7 +54,7 @@ class RequestRepoImpl extends RequestRepo {
         return BaseResponse(
             status: false, message: result.message, title: result.status);
       } else {
-        appPrint('the result is ${result.status}');
+        appPrint('the result is ${result.data}');
         return BaseResponse(
             status: true,
             message: result.message,

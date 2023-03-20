@@ -11,7 +11,6 @@ class ThemeNotifier extends ChangeNotifier {
 
   setThemeMode() async {
     _themeMode = ThemeMode.light;
-    _themeMode = ThemeMode.dark;
     notifyListeners();
   }
 }

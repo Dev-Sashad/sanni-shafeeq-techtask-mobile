@@ -5,7 +5,7 @@ import 'package:tech_task/_lib.dart';
 import 'package:tech_task/screens/lunch/widgets/custom_lunch_tile.dart';
 import 'package:tech_task/utils/mixins/ui_tool_mixin.dart';
 
-class CarScreen extends ConsumerWidget with UIToolMixin {
+class LunchScreen extends ConsumerWidget with UIToolMixin {
   @override
   Widget build(BuildContext context, ref) {
     final vm = ref.watch(queryresult.state).state;
@@ -21,6 +21,8 @@ class CarScreen extends ConsumerWidget with UIToolMixin {
                   children: [
                     VerticalSpace(20),
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         InkWell(
                           onTap: () => navigationService.pop(),
@@ -30,7 +32,7 @@ class CarScreen extends ConsumerWidget with UIToolMixin {
                             color: AppColors.black,
                           ),
                         ),
-                        HorizontalSpace(40),
+                        HorizontalSpace(20),
                         CustomText(
                           'Suggested Lunch',
                           textType: TextType.bigText,
@@ -38,36 +40,29 @@ class CarScreen extends ConsumerWidget with UIToolMixin {
                         ),
                       ],
                     ),
-                    VerticalSpace(eqH(20)),
+                    VerticalSpace(eqH(30)),
                     Expanded(
-                      child: Container(
-                          height: screenHeight * 0.7,
-                          child: SingleChildScrollView(
-                            physics: BouncingScrollPhysics(),
-                            child: AnimationLimiter(
-                              child: Column(
-                                children:
-                                    AnimationConfiguration.toStaggeredList(
-                                  duration: const Duration(milliseconds: 700),
-                                  childAnimationBuilder: (widget) =>
-                                      SlideAnimation(
-                                    verticalOffset: 50.0,
-                                    child: FadeInAnimation(
-                                      child: widget,
-                                    ),
-                                  ),
-                                  children: [
-                                    ...vm
-                                        .map((e) => LunchTile(
-                                              data: e,
-                                            ))
-                                        .toList(),
-                                    VerticalSpace(eqH(50))
-                                  ],
+                      flex: 0,
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: AnimationLimiter(
+                          child: Column(
+                            children: AnimationConfiguration.toStaggeredList(
+                              duration: const Duration(milliseconds: 700),
+                              childAnimationBuilder: (widget) => SlideAnimation(
+                                verticalOffset: 50.0,
+                                child: FadeInAnimation(
+                                  child: widget,
                                 ),
                               ),
+                              children: [
+                                ...vm.map((e) => LunchTile(data: e)).toList(),
+                                VerticalSpace(eqH(50))
+                              ],
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                     )
                   ]),
             ),

@@ -10,7 +10,7 @@ class LunchTile extends StatelessWidget {
     return Container(
       alignment: Alignment.centerLeft,
       width: screenWidth,
-      padding: EdgeInsets.fromLTRB(15, 10, 15, 10),
+      padding: EdgeInsets.fromLTRB(15, 15, 15, 10),
       margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
           color: AppColors.white,
@@ -19,12 +19,16 @@ class LunchTile extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
-            child: CustomText(
-              data.title!,
-              textType: TextType.mediumText,
-              color: AppColors.textColor,
-            ),
+          Wrap(
+            children: [
+              CustomText(
+                data.title!,
+                textType: TextType.mediumText,
+                fontWeight: FontWeight.bold,
+                color: AppColors.textColor,
+                maxLines: 10,
+              ),
+            ],
           ),
           VerticalSpace(5),
           InkWell(
@@ -36,15 +40,19 @@ class LunchTile extends StatelessWidget {
             child: Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
+                  width: 100,
                   alignment: Alignment.center,
                   padding: pad(both: 5),
                   child: CustomText(
                     "view recipes",
                     textType: TextType.smallestText,
-                    color: AppColors.black,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.primaryColor,
                   ),
                   decoration: BoxDecoration(
-                      color: AppColors.white,
+                      border: Border.all(
+                        color: AppColors.primaryColor,
+                      ),
                       borderRadius: BorderRadius.horizontal(
                         left: Radius.circular(10),
                         right: Radius.circular(10),

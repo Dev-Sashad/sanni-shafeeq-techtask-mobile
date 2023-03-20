@@ -4,7 +4,7 @@ description: A new Flutter project.
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
-
+publish_to: none
 version: 1.0.0+1
 
 environment:
@@ -25,6 +25,9 @@ dependencies:
   fluttertoast: ^8.0.8
   flutter_animated_dialog: ^2.0.1
   flutter_datetime_picker:
+    git:
+      url: https://github.com/AlexHartford/flutter_datetime_picker.git
+      ref: master
   flutter_riverpod: ^1.0.3
   flutter_screenutil: ^5.5.2
   flutter_staggered_animations:

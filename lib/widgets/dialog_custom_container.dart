@@ -10,7 +10,7 @@ class DialogCustomContainer extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: eqH(700),
+        height: eqH(500),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(20.r),

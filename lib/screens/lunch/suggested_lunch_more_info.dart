@@ -17,27 +17,31 @@ class ViewMoreInfo extends ConsumerWidget {
           useRowAppBar: false,
           showLeading: false,
           showSubTitle: false,
-          onPop: () => Navigator.of(context).pop(),
+          topPadding: 20,
           title: data.title ?? "",
           child: CustomScrollWidget(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
+                  VerticalSpace(20),
                   ...data.ingredients!
-                      .map((e) => Row(
-                            children: [
-                              CircleAvatar(
-                                radius: 3,
-                                backgroundColor: AppColors.primaryColor,
-                              ),
-                              HorizontalSpace(20),
-                              CustomText(
-                                e,
-                                textType: TextType.mediumText,
-                                fontWeight: FontWeight.w500,
-                              )
-                            ],
+                      .map((e) => Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 3,
+                                  backgroundColor: AppColors.primaryColor,
+                                ),
+                                HorizontalSpace(20),
+                                CustomText(
+                                  e,
+                                  textType: TextType.largeText,
+                                  fontWeight: FontWeight.w500,
+                                )
+                              ],
+                            ),
                           ))
                       .toList()
                 ],

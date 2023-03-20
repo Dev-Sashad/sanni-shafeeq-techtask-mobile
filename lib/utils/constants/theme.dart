@@ -22,37 +22,37 @@ class AppTheme {
     fontFamily: GoogleFonts.nunitoTextTheme().bodyText1!.fontFamily,
     textTheme: TextTheme(
       headlineLarge: GoogleFonts.josefinSans(
-        fontSize: 32.sp,
+        fontSize: 30.sp,
         color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
       headlineMedium: GoogleFonts.josefinSans(
-        fontSize: 28.sp,
+        fontSize: 26.sp,
         color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
       titleLarge: GoogleFonts.ibmPlexSans(
-        fontSize: 28.sp,
+        fontSize: 24.sp,
         color: Colors.black,
         fontWeight: FontWeight.normal,
       ),
       titleMedium: GoogleFonts.nunito(
-        fontSize: 20.sp,
-        fontWeight: FontWeight.normal,
-        color: Colors.black,
-      ),
-      bodyLarge: GoogleFonts.nunito(
         fontSize: 18.sp,
         fontWeight: FontWeight.normal,
         color: Colors.black,
       ),
-      bodyMedium: GoogleFonts.nunito(
+      bodyLarge: GoogleFonts.nunito(
         fontSize: 16.sp,
         fontWeight: FontWeight.normal,
         color: Colors.black,
       ),
-      bodySmall: GoogleFonts.nunito(
+      bodyMedium: GoogleFonts.nunito(
         fontSize: 14.sp,
+        fontWeight: FontWeight.normal,
+        color: Colors.black,
+      ),
+      bodySmall: GoogleFonts.nunito(
+        fontSize: 12.sp,
         fontWeight: FontWeight.normal,
         color: Colors.black,
       ),

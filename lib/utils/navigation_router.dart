@@ -20,7 +20,7 @@ Route<dynamic> generateRoute(RouteSettings? settings) {
     case suggestedLunchScreenRoute:
       return _getPageRoute(
         routeName: settings.name!,
-        viewToShow: Container(),
+        viewToShow: LunchScreen(),
       );
 
     default:

@@ -45,7 +45,7 @@ class HomeVm extends BaseModel {
     } else if (Jiffy(_lunchDate.toString()).isTomorrow) {
       _lunchValue = "Tomorrow";
     } else {
-      _lunchValue = formatDayDateMonth(_lunchDate.toString());
+      _lunchValue = formatDayDateMonth(_lunchDate);
     }
     notifyListeners();
   }
@@ -65,6 +65,7 @@ class HomeVm extends BaseModel {
     } else {
       _ref.read(queryIngredients.notifier).state.add(value);
     }
+    notifyListeners();
   }
 
   // initializing welcome message value based on time of day
@@ -90,13 +91,14 @@ class HomeVm extends BaseModel {
                 .map((e) => IngredientModel.fromJson(e))
                 .toList()
             : [];
+        appPrint(data);
         _ingredients = data;
+        notifyListeners();
         setHomeState(LoadingState.done);
       } else {
         setHomeState(LoadingState.error);
         _errorMessage = response.message ?? "";
       }
-      notifyListeners();
     } catch (e) {
       setHomeState(LoadingState.error);
       _errorMessage = AppStrings.tryAgainText;
@@ -124,7 +126,7 @@ class HomeVm extends BaseModel {
         } else {
           setLoading(LoadingState.error);
           showOkayDialog(
-              icon: Icons.error,
+              icon: Icons.close,
               iconBorderColor: Colors.red,
               title: AppStrings.errorTitle,
               message: AppStrings.noSuggestedLunchText);
@@ -133,7 +135,7 @@ class HomeVm extends BaseModel {
       } else {
         setLoading(LoadingState.error);
         showOkayDialog(
-            icon: Icons.error,
+            icon: Icons.close,
             iconBorderColor: Colors.red,
             title: response.title!,
             message: response.message!);
@@ -142,7 +144,7 @@ class HomeVm extends BaseModel {
     } catch (e) {
       setLoading(LoadingState.error);
       showOkayDialog(
-          icon: Icons.error,
+          icon: Icons.close,
           iconBorderColor: Colors.red,
           title: AppStrings.errorTitle,
           message: AppStrings.tryAgainText);
@@ -155,5 +157,5 @@ final homeVm = ChangeNotifierProvider<HomeVm>(
   (ref) => HomeVm(ref, locator<RequestRepo>()),
 );
 
-final queryresult = StateProvider.autoDispose<List<RecipesModel>>((ref) => []);
+final queryresult = StateProvider<List<RecipesModel>>((ref) => []);
 final queryIngredients = StateProvider<List<String>>((ref) => []);
