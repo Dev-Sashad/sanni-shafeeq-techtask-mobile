@@ -7,13 +7,13 @@ import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:tech_task/_lib.dart';
 
 abstract class NetworkService {
-  Future<ApiModel> call({
+  Future<dynamic> call({
     required String path,
     required RequestMethod method,
     Map<String, dynamic> body = const {},
     Map<String, dynamic> queryParams = const {},
   });
-  Future<ApiModel> upload(
+  Future<dynamic> upload(
       {required String path,
       Map<String, dynamic> body = const {},
       Map<String, File> files = const {}});
@@ -116,7 +116,6 @@ class NetworkServiceImp extends NetworkService {
     if (response.data == null) {
       return ApiModel(status: 'Error', message: 'An error occured');
     }
-
     return ApiModel(status: "Success", message: "Success", data: response.data);
   }
 

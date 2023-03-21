@@ -1,55 +1,124 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:tech_task/_lib.dart';
 import 'package:tech_task/core/repository/request_repo.dart';
 import 'package:tech_task/data/network_request.dart';
 
-class MockDio extends Mock implements Dio {}
+class MockNetworkService extends Mock implements NetworkService {}
 
 void main() {
-  late NetworkService networkService;
-  MockDio dio = MockDio();
-  late RequestRepo _requstRepo;
-  setUpAll(() {
-    networkService = NetworkServiceImp(dio: dio, baseUrl: AppEndpoint.baseUrl);
-    _requstRepo = RequestRepoImpl(networkService);
-  });
+  // late RequestRepoImpl requestRepo;
+  // late MockNetworkService mockNetworkService;
 
-  // group('Request Repository', () {
-  //   test('Should return TRUE on get ingredients', () async {
-  //     when(networkService.call(
-  //             path: AppEndpoint.getIngredients, method: RequestMethod.post))
-  //         .thenAnswer(
-  //       (_) => Future.value(
-  //           ApiModel(status: "Success", message: "Success", data: [])),
-  //     );
-  //     final result = await _requstRepo.getIngredient();
-  //     expect(result.status, false);
-  //   });
+  // setUp(() {
+  //   mockNetworkService = MockNetworkService();
+  //   requestRepo = RequestRepoImpl(mockNetworkService);
+  // });
 
-  //   test('Should return FALSE on get ingredients', () async {
-  //     when(networkService.call(
-  //             path: AppEndpoint.getIngredients, method: RequestMethod.post))
-  //         .thenAnswer(
-  //       (_) => Future.value(ApiModel(
-  //         status: "Error",
-  //         message: "Internet Error",
-  //       )),
-  //     );
+  // group('getIngredient', () {
+  //   test(
+  //       'returns BaseResponse with status true when network call is successful',
+  //       () async {
+  //     final mockResult = ApiModel(status: 'Success', message: 'Success', data: [
+  //       {"title": "Ham", "use-by": "2020-11-25"}
+  //     ]);
+  //     when(mockNetworkService.call(
+  //         path: AppEndpoint.getIngredients,
+  //         method: RequestMethod.get,
+  //         body: {})).thenAnswer((_) async => Future.value(mockResult));
 
-  //     final result = await _requstRepo.getIngredient();
-  //     expect(result.status, false);
-  //   });
+  //     final result = await requestRepo.getIngredient();
 
-  //   test('Should return TRUE on get recipes', () async {
-  //     when(networkService.call(
-  //             path: AppEndpoint.getRecipes, method: RequestMethod.post))
-  //         .thenAnswer(
-  //       (_) => Future.value(ApiModel(status: "Success", message: "Success")),
-  //     );
-  //     final result = await _requstRepo.getReceipe(query: "");
   //     expect(result.status, true);
+  //     expect(result.message, mockResult.message);
+  //     expect(result.title, mockResult.status);
+  //     expect(result.data, isA<List>());
   //   });
+
+  //   test('returns BaseResponse with status false when network call fails',
+  //       () async {
+  //     final mockResult = ApiModel(
+  //       status: 'Error',
+  //       message: 'Failure',
+  //     );
+  //     when(mockNetworkService.call(
+  //         path: AppEndpoint.getIngredients,
+  //         method: RequestMethod.get,
+  //         body: {})).thenAnswer((_) async => Future.value(mockResult));
+
+  //     final result = await requestRepo.getIngredient();
+
+  //     expect(result.status, false);
+  //     expect(result.message, mockResult.message);
+  //     expect(result.title, mockResult.status);
+  //     expect(result.data, isNull);
+  //   });
+
+  //   test(
+  //       'should return BaseResponse with status false when network call throws an error',
+  //       () async {
+  //     when(mockNetworkService.call(
+  //       path: AppEndpoint.getIngredients,
+  //       method: RequestMethod.get,
+  //       body: {},
+  //     )).thenThrow(Exception('Failed to retrieve data'));
+
+  //     final response = await requestRepo.getIngredient();
+
+  //     expect(response.status, false);
+  //     expect(response.message, 'An error occurred');
+  //     expect(response.title, 'Error');
+  //     expect(response.data, isNull);
+  //   });
+  // });
+
+  // group('getReceipe', () {
+  //   test(
+  //       'should return BaseResponse with status true when network call is successful',
+  //       () async {
+  //     final result = ApiModel(
+  //         status: 'Success',
+  //         message: 'Data retrieved successfully',
+  //         data: [
+  //           {
+  //             'name': 'Pancakes',
+  //             'ingredients': ['eggs', 'flour']
+  //           },
+  //         ]);
+
+  //     when(mockNetworkService.call(
+  //       path: AppEndpoint.getRecipes,
+  //       method: RequestMethod.get,
+  //       body: {},
+  //       queryParams: {'ingredients': 'eggs,flour'},
+  //     )).thenAnswer((_) async => Future.value(result));
+
+  //     final response = await requestRepo.getReceipe(query: 'eggs,flour');
+
+  //     expect(response.status, true);
+  //     expect(response.message, result.message);
+  //     expect(response.title, result.status);
+  //     expect(response.data, result.data);
+  //   });
+
+  // test(
+  //     'should return BaseResponse with status false when network call is unsuccessful',
+  //     () async {
+  //   final result = ApiModel(status: 'Error', message: 'An error occurred');
+
+  //   when(mockNetworkService.call(
+  //     path: AppEndpoint.getRecipes,
+  //     method: RequestMethod.get,
+  //     body: {},
+  //     queryParams: {'ingredients': 'eggs,flour'},
+  //   )).thenAnswer((_) async => result);
+
+  //   final response = await requestRepo.getReceipe(query: 'eggs,flour');
+
+  //   expect(response.status, false);
+  //   expect(response.message, result.message);
+  //   expect(response.title, result.data);
+  //   expect(response.data, isNull);
+  // });
   // });
 }

@@ -1,39 +1,66 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:tech_task/_lib.dart';
 import 'package:tech_task/data/network_request.dart';
-
-final baseUrl = "http://www.google.com";
-final errorUrl = "";
 
 class MockDio extends Mock implements Dio {}
 
 void main() {
-  late NetworkService networkService;
-  MockDio dio = MockDio();
-  setUpAll(() {
-    networkService = NetworkServiceImp(dio: dio, baseUrl: baseUrl);
-  });
+  group('NetworkServiceImp', () {
+    final dio = MockDio();
+    final baseUrl = 'http://localhost:3000';
+    final getUrl =
+        'https://lb7u7svcm5.execute-api.ap-southeast-1.amazonaws.com/dev/';
 
-  group('Network Service methods test', () {
-    test('Should return success when GET request status is success', () async {
-      when(dio.get(baseUrl)).thenAnswer((_) => Future.value(Response(
-          requestOptions: RequestOptions(path: baseUrl),
-          statusCode: 200,
-          data: {})));
-      final response =
-          await networkService.call(path: "", method: RequestMethod.get);
-      expect(response.status, "Success");
+    test('upload() method should return ApiModel', () async {
+      final networkService = NetworkServiceImp(dio: dio, baseUrl: baseUrl);
+      final files = {
+        'file': File('path/to/file.jpg'),
+      };
+      final response = await networkService.upload(
+        path: '/upload',
+        files: files,
+      );
+
+      expect(response, isA<ApiModel>());
+      expect(response.status, equals('Error'));
+      expect(response.message, isA<String>());
+      expect(response.data, isNull);
     });
 
-    test('Should return error when GET request status is error', () async {
-      when(dio.get("" + "")).thenAnswer((_) => Future.value(Response(
-            requestOptions: RequestOptions(path: "" + ""),
-            statusCode: 400,
-          )));
-      final response =
-          await networkService.call(path: "", method: RequestMethod.get);
-      expect(response.status, "Success");
+    test('call() method should return ApiModel', () async {
+      final result = Response<dynamic>(
+        requestOptions: RequestOptions(
+          path: getUrl,
+          contentType: 'application/json',
+        ),
+        statusCode: 200,
+        data: [
+          {"title": "Ham", "use-by": "2020-11-25"},
+        ],
+      );
+      print('valuuuuuuuee $result');
+      when(dio.get(getUrl,
+          options: Options(
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+          ))).thenReturn(Future.value(result));
+
+      final networkService = NetworkServiceImp(dio: dio, baseUrl: getUrl);
+      final response = await networkService.call(
+        path: '',
+        method: RequestMethod.get,
+      );
+
+      expect(response, isA<ApiModel>());
+      expect(response.status, equals('Success'));
+      expect(response.message, isA<String>());
+      expect(response.data, equals(result.data));
     });
   });
 }

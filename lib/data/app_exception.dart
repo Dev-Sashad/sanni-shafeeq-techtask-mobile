@@ -57,6 +57,10 @@ class ApiModel {
           message = 'Send timeout in connection';
           status = 'SEND_TIMEOUT';
           break;
+        default:
+          message = 'An error occured';
+          status = 'Error';
+          break;
       }
     } else {
       status = "Error";
