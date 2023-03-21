@@ -19,10 +19,8 @@ abstract class NetworkService {
       Map<String, File> files = const {}});
 }
 
-class NetworkServiceImp extends NetworkService {
-  final String baseUrl = AppEndpoint.baseUrl;
-
-  Dio _getDioInstance() {
+class DioService {
+  Dio getDioInstance() {
     var dio = Dio(
       BaseOptions(
         connectTimeout: 15000,
@@ -34,7 +32,6 @@ class NetworkServiceImp extends NetworkService {
       ),
     );
     // dio.interceptors.add(AppInterceptor());
-
     //Pretty Dio logger is a Dio interceptor that logs network calls in a pretty, easy to read format.
     dio.interceptors.add(
       PrettyDioLogger(
@@ -65,6 +62,13 @@ class NetworkServiceImp extends NetworkService {
 
     return dio;
   }
+}
+
+class NetworkServiceImp extends NetworkService {
+  final String baseUrl;
+  final Dio dio;
+
+  NetworkServiceImp({required this.dio, required this.baseUrl});
 
   @override
   Future<ApiModel> call({
@@ -76,7 +80,7 @@ class NetworkServiceImp extends NetworkService {
     Response response;
     var url = baseUrl + path!;
     appPrint(url);
-    _getDioInstance().options.headers.addAll(
+    dio.options.headers.addAll(
       {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -85,25 +89,24 @@ class NetworkServiceImp extends NetworkService {
     try {
       switch (method!) {
         case RequestMethod.get:
-          response =
-              await _getDioInstance().get(url, queryParameters: queryParams);
+          response = await dio.get(url, queryParameters: queryParams);
           break;
         case RequestMethod.post:
-          response = await _getDioInstance().post(url,
+          response = await dio.post(url,
               data: FormData.fromMap(body),
               queryParameters: queryParams,
               options: Options(contentType: 'application/json'));
           break;
         case RequestMethod.patch:
-          response = await _getDioInstance().patch(url,
+          response = await dio.patch(url,
               data: FormData.fromMap(body), queryParameters: queryParams);
           break;
         case RequestMethod.put:
-          response = await _getDioInstance().put(url,
+          response = await dio.put(url,
               data: FormData.fromMap(body), queryParameters: queryParams);
           break;
         case RequestMethod.delete:
-          response = await _getDioInstance().delete(url,
+          response = await dio.delete(url,
               data: FormData.fromMap(body), queryParameters: queryParams);
           break;
       }
@@ -136,7 +139,7 @@ class NetworkServiceImp extends NetworkService {
       body.addAll(fileMap);
       var formData = FormData.fromMap(body);
 
-      response = await _getDioInstance().post(url,
+      response = await dio.post(url,
           data: formData, options: Options(contentType: 'multipart/form-data'));
     } catch (e) {
       return ApiModel.handleResponse(e);

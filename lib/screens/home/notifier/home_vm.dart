@@ -91,7 +91,6 @@ class HomeVm extends BaseModel {
                 .map((e) => IngredientModel.fromJson(e))
                 .toList()
             : [];
-        appPrint(data);
         _ingredients = data;
         notifyListeners();
         setHomeState(LoadingState.done);

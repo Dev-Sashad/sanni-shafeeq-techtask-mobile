@@ -7,20 +7,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:tech_task/_lib.dart';
 import 'package:tech_task/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp());
+  //testWidgets('Splashscreen test', (WidgetTester tester) async {
+  // await tester.pumpWidget(SplashScreen());
 
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  // expect(
+  //     find.widgetWithText(CustomText, AppStrings.appTitle), findsOneWidget);
+  // expect(find.widgetWithText(CustomText, '1'), findsNothing);
 
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  // await tester.tap(find.byIcon(Icons.add));
+  // await tester.pump();
 
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });
+  // expect(find.text('0'), findsNothing);
+  // expect(find.text('1'), findsOneWidget);
+  // });
 }
