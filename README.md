@@ -12,3 +12,15 @@ APP USAGE INSTANCE
 4. If there is an error in the process, a dialog shows with an error message. if the api call is successful, the app navigates to the suggested lunch screen.
 
 5. The user sees an array of suggetsed lunch and he can click on the recipes button to view a full information of the individual suggeted item.
+
+DEMO INSTACE OF UNEXPIRED ITEMS
+
+
+https://user-images.githubusercontent.com/62085280/226823324-28f2677f-76cf-437f-8278-3e747d3fd844.mp4
+
+
+
+DEMO INSTACE OF EXPIRED ITEMS
+
+https://user-images.githubusercontent.com/62085280/226823407-cc6d2568-052d-4c44-b289-90e8260917eb.mp4
+
