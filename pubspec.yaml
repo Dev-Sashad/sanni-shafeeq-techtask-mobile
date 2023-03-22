@@ -1,0 +1,65 @@
+name: tech_task
+description: A new Flutter project.
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  connectivity_plus: ^2.2.0
+  curl_logger_dio_interceptor: ^0.0.3
+  date_format: ^2.0.6
+  dio: ^4.0.6
+  dio_smart_retry: ^1.3.2
+  fluttertoast: ^8.0.8
+  flutter_animated_dialog: ^2.0.1
+  flutter_datetime_picker:
+    git:
+      url: https://github.com/AlexHartford/flutter_datetime_picker.git
+      ref: master
+  flutter_riverpod: ^1.0.3
+  flutter_screenutil: ^5.5.2
+  flutter_staggered_animations:
+  flutter_svg: ^1.0.3
+  font_awesome_flutter: ^9.0.0
+  get:
+  get_it: ^7.2.0
+  google_fonts: ^3.0.1
+  intl: ^0.17.0
+  json_serializable: any
+  pretty_dio_logger: ^1.1.1
+  shimmer:
+  jiffy: ^5.0.0
+  
+ 
+  
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.1.0
+  flutter_lints: any
+  build_runner:
+
+dependency_overrides:
+  platform: ^3.1.0
+
+
+
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
