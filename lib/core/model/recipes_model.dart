@@ -1,3 +1,5 @@
+// custom model of the response from the get
+//recipes api to handle the json response to a dart class
 class RecipesModel {
   String? title;
   List<String>? ingredients;

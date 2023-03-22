@@ -1,4 +1,5 @@
-
+// custom model of the response from the get
+//ingredients api to handle the json response to a dart class
 class IngredientModel {
   String? title;
   String? useBy;

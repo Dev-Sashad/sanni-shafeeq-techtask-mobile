@@ -14,6 +14,8 @@ class HomeVm extends BaseModel {
     initLunchValue();
   }
 
+  // State of the app to determine the interface a user would see
+  //based on the state
   LoadingState _homeState = LoadingState.idle;
   LoadingState get homestate => _homeState;
   setHomeState(LoadingState value) {
@@ -21,6 +23,7 @@ class HomeVm extends BaseModel {
     notifyListeners();
   }
 
+  // Array of ingredients after api call
   List<IngredientModel> _ingredients = [];
   List<IngredientModel> get ingredients => _ingredients;
 
@@ -156,5 +159,8 @@ final homeVm = ChangeNotifierProvider<HomeVm>(
   (ref) => HomeVm(ref, locator<RequestRepo>()),
 );
 
+// the query result is the response after calling get recipes
 final queryresult = StateProvider<List<RecipesModel>>((ref) => []);
+
+// Query ingredients are the array of selected times from the fridge
 final queryIngredients = StateProvider<List<String>>((ref) => []);
